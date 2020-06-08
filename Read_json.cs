@@ -38,15 +38,21 @@ namespace Postgres_H3_Maalpinde
                 insert.ExecuteNonQuery();
             }
 
+            // ---------- SELECT and read my_func ----------- \\
+
             using (NpgsqlCommand select_func = new NpgsqlCommand("SELECT my_func(1, 2)", H3_Maalpinde))
-            using (var reader1 = select_func.ExecuteReader()) { }
+            using (NpgsqlDataReader reader1 = select_func.ExecuteReader()) { }
+
+            // ---------- Create my_func ---------- \\
 
             using (NpgsqlCommand func = new NpgsqlCommand("my_func", H3_Maalpinde))
             {
                 func.CommandType = System.Data.CommandType.StoredProcedure;
                 func.Parameters.AddWithValue("p1", "some_value");
-                using (var reader2 = func.ExecuteReader()) { }
+                using (NpgsqlDataReader reader2 = func.ExecuteReader()) { }
             }
+
+
         }
     }
 }
